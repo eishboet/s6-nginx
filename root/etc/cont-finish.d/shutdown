@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bash
+
+if pgrep -f "[n]ginx:" > /dev/null; then
+  kill -QUIT $( cat /usr/local/nginx/logs/nginx.pid )
+fi
