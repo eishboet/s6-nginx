@@ -17,7 +17,7 @@ RUN apt-get update \
 	&& apt-get clean
 
 # copy local directories and files
-COPY root /
+COPY root/ /
 
 # expose ports 80 and 443
 EXPOSE 80 443
