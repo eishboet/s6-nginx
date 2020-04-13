@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/usr/bin/execlineb -P
 
 if pgrep -f "[n]ginx:" > /dev/null; then
   pkill [n]ginx:
