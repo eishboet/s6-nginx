@@ -1,6 +1,5 @@
 #!/usr/bin/with-contenv bash
 
-echo "debug config"
 # Create directories for nginx
 mkdir -p /config/{nginx/sites-enabled,logs/nginx,logs/nginx/sites,rules,conf.d,certs}
 
