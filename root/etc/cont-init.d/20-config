@@ -1,19 +1,27 @@
 #!/usr/bin/with-contenv bash
 
+echo "creating nginx config directories..."
 # Create directories for nginx
 mkdir -p /config/{nginx/sites-enabled,logs/nginx,logs/nginx/sites,rules,conf.d,certs}
+if [ $? ] then
+  echo " creating nginx config directories... complete"
+fi
 
-# copy default config files to the /config/nginx folder only if they do not exist
-[[ ! -f /config/nginx/nginx.conf ]] \
-  && cp /default/nginx.conf /config/nginx/nginx.conf
-[[ ! -f /config/nginx/fastcgi.conf ]] \
-  && cp /default/fastcgi.conf /config/nginx/fastcgi.conf
-[[ ! -f /config/nginx/fastcgi_params ]] \
-  && cp /default/fastcgi_params /config/nginx/fastcgi_params
-[[ ! -f /config/nginx/sites-enabled/default ]] \
-  && cp /default/default /config/nginx/sites-enabled/default
-[[ $(find /www -type f | wc -l) -eq 0 ]] \
-  && cp /default/index.html /www/index.html
+if [ ! -f /config/nginx/nginx.conf ] then
+  echo "copying default nginx configuration files..."
+  # copy default config files to the /config/nginx folder only if they do not exist
+
+  for CONFIGURATION in /default/*; do
+    if [ ! -f /config/nginx/${CONFIGURATION} ] && [ "${CONFIGURATION}" != "index.html" ] then
+      cp /defaults/${CONFIGURATION} /config/nginx/${CONFIGURATION} \
+      echo "${CONFIGURATION} copied"
+    fi
+  elif then
+      cp /defaults/${CONFIGURATION} /www/${CONFIGURATION} \
+      echo "${CONFIGURATION} copied"
+    fi
+  done
+fi
 
 # set ownership and permissions
 chown -R abc:abc /config
