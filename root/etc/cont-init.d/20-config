@@ -17,14 +17,15 @@ if [ ! -f /config/nginx/nginx.conf ]; then
     NAME="$(basename "${CONFIGURATION}")"
 
     if [ ! -f /config/nginx/${NAME} ] && [ ${NAME} != "index.html" ] || [ ${NAME} != "default"]; then
-      cp ${CONFIGURATION} /config/nginx/ \
+      cp ${CONFIGURATION} /config/nginx/
       echo "${NAME} copied"
-  elif [ ! -f /config/nginx/sites-enabled/${NAME} ] && [ ${NAME} == "default" ]; then
-      cp ${CONFIGURATION} /config/nginx/sites-enabled/ \
+    elif [ ! -f /config/nginx/sites-enabled/${NAME} ] && [ ${NAME} == "default" ]; then
+      cp ${CONFIGURATION} /config/nginx/sites-enabled/
       echo "${NAME} copied"
-  elif [ $(find /www -type f | wc -l) -eq 0 ] && [ ${NAME} == "index.nginx-debian.html"]; then
-    cp ${CONFIGURATION} /www/ \
-    echo "${NAME} copied"
+    elif [ $(find /www -type f | wc -l) -eq 0 ] && [ ${NAME} == "index.nginx-debian.html"]; then
+      cp ${CONFIGURATION} /www/
+      echo "${NAME} copied"
+    fi
   done
 fi
 
