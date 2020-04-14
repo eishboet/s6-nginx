@@ -1,25 +1,30 @@
 #!/usr/bin/with-contenv bash
 
 echo "creating nginx config directories..."
+
 # Create directories for nginx
 mkdir -p /config/{nginx/sites-enabled,logs/nginx,logs/nginx/sites,rules,conf.d,certs}
-if [ $? ] then
-  echo " creating nginx config directories... complete"
+
+if [ $? ]; then
+  echo "complete"
 fi
 
-if [ ! -f /config/nginx/nginx.conf ] then
+if [ ! -f /config/nginx/nginx.conf ]; then
   echo "copying default nginx configuration files..."
   # copy default config files to the /config/nginx folder only if they do not exist
 
-  for CONFIGURATION in /default/*; do
-    if [ ! -f /config/nginx/${CONFIGURATION} ] && [ "${CONFIGURATION}" != "index.html" ] then
-      cp /defaults/${CONFIGURATION} /config/nginx/${CONFIGURATION} \
-      echo "${CONFIGURATION} copied"
-    fi
-  elif then
-      cp /defaults/${CONFIGURATION} /www/${CONFIGURATION} \
-      echo "${CONFIGURATION} copied"
-    fi
+  for CONFIGURATION in /defaults/*; do
+    NAME="$(basename "${CONFIGURATION}")"
+
+    if [ ! -f /config/nginx/${NAME} ] && [ ${NAME} != "index.html" ] || [ ${NAME} != "default"]; then
+      cp ${CONFIGURATION} /config/nginx/ \
+      echo "${NAME} copied"
+  elif [ ! -f /config/nginx/sites-enabled/${NAME} ] && [ ${NAME} == "default" ]; then
+      cp ${CONFIGURATION} /config/nginx/sites-enabled/ \
+      echo "${NAME} copied"
+  elif [ $(find /www -type f | wc -l) -eq 0 ] && [ ${NAME} == "index.nginx-debian.html"]; then
+    cp ${CONFIGURATION} /www/ \
+    echo "${NAME} copied"
   done
 fi
 
