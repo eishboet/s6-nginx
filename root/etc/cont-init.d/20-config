@@ -23,7 +23,7 @@ if [ ! -f /config/nginx/nginx.conf ]; then
       cp ${CONFIGURATION} /config/nginx/sites-enabled/
       echo "${NAME} copied"
     elif [ $(find /www -type f | wc -l) -eq 0 ] && [ ${NAME} == "index.nginx-debian.html"]; then
-      cp ${CONFIGURATION} /www/
+      cp ${CONFIGURATION} /var/www/
       echo "${NAME} copied"
     fi
   done
@@ -31,5 +31,5 @@ fi
 
 # set ownership and permissions
 chown -R abc:abc /config
-chmod -R g+w /config/nginx /www
+chmod -R g+w /config/nginx /var/www
 chmod -R 644 /etc/logrotate.d
